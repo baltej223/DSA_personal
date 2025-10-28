@@ -1,10 +1,13 @@
 package linkedlist
 
-import "fmt"
+import (
+	"fmt"
+	// "go_ds/linkedlist"
+)
 
 type Node struct {
-	data int
-	next *Node
+	Data int
+	Next *Node
 }
 
 func Create(size int, def_val int) *Node {
@@ -12,9 +15,9 @@ func Create(size int, def_val int) *Node {
 	var first = &Node{def_val, nil}
 	prev = first
 	for i := 0; i < size-1; i++ {
-		nthNode := Node{def_val, nil}
-		prev.next = &nthNode
-		prev = &nthNode
+		nthNode := &Node{def_val, nil}
+		prev.Next = nthNode
+		prev = nthNode
 	}
 	return first
 }
@@ -26,18 +29,29 @@ func CreateFromSlice(arr []int) *Node {
 	prev = first
 	for i := 1; i < length; i++ {
 		nthNode := &Node{arr[i], nil}
-		prev.next = nthNode
+		prev.Next = nthNode
 		prev = nthNode
 	}
 	return first
 }
 
 func Print(list *Node) {
-	// fmt.Println("Print called")
-	current := list
-	// fmt.Println(current)
-	for next := current.next; next != nil; next = next.next {
-		fmt.Println(current.data)
+	for current := list; current != nil; current = current.Next {
+		fmt.Println(current.Data)
 	}
+}
 
+func CountLength(list interface{}) int {
+	count := 0
+	switch l := list.(type) {
+	case *Node:
+		for current := l; current != nil; current = current.Next {
+			count++
+		}
+	case *DLLNode:
+		for current := l; current != nil; current = current.Next {
+			count++
+		}
+	}
+	return count
 }
